@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'unfold',  
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -102,9 +103,8 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
-
-TIME_ZONE = 'UTC'
+LANGUAGE_CODE = 'es-co'
+TIME_ZONE = 'America/Bogota'
 
 USE_I18N = True
 
@@ -120,3 +120,27 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+UNFOLD = {
+    "SITE_TITLE": "Panel Admin",
+    "SITE_HEADER": "Mi Admin",
+    "SHOW_HISTORY": True,
+    "MENU": [
+        {
+            "type": "title",
+            "label": "Gestión",
+        },
+        {
+            "type": "model",
+            "label": "Usuarios",
+            "model": "auth.User",
+            "icon": "user",
+        },
+        {
+            "type": "model",
+            "label": "Grupos",
+            "model": "auth.Group",
+            "icon": "users",
+        },
+    ],
+}
