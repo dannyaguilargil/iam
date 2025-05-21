@@ -22,3 +22,7 @@ class modulo(models.Model):
     
     def __str__(self):
         return self.nombre
+    
+class Formulario(models.Model):
+    nombre = models.CharField(max_length=100)
+    estructura = models.JSONField(help_text="Define aquí la estructura del formulario (JSON)")

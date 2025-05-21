@@ -39,6 +39,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'gestion_identidades',
+    #'dynamic_forms',
+    #'django_form_builder',
+    #'django_form_builder_form_renderer',
+    #'django_form_designer',
 ]
 
 MIDDLEWARE = [

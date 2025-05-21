@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import  aplicativo,modulo
+from .models import  aplicativo,modulo,Formulario
 #from import_export.admin import ImportExportModelAdmin
 #from import_export.resources import ModelResource
 #from import_export.admin import ExportMixin
@@ -18,3 +18,9 @@ class Modulo(admin.ModelAdmin):
     list_filter = ('aplicativo', 'fecha_creacion')
     search_fields = ('nombre',)
 admin.site.register(modulo, Modulo)
+
+
+@admin.register(Formulario)
+class FormularioPersonalizadoAdmin(admin.ModelAdmin):
+    list_display = ['nombre']
+    search_fields = ['nombre']
