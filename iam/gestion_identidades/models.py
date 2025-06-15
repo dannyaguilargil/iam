@@ -25,4 +25,21 @@ class modulo(models.Model):
     
 class Formulario(models.Model):
     nombre = models.CharField(max_length=100)
-    estructura = models.JSONField(help_text="Define aquí la estructura del formulario (JSON)")
+    descripcion = models.TextField(blank=True)
+    fecha_creacion = models.DateTimeField(auto_now_add=True)
+    fecha_actualizacion = models.DateTimeField(auto_now=True)
+
+TIPO_CAMPO = [
+    ('text', 'Texto corto'),
+    ('textarea', 'Texto largo'),
+    ('number', 'Número'),
+    ('date', 'Fecha'),
+    ('select', 'Selección'),
+]
+
+class CampoFormulario(models.Model):
+    formulario = models.ForeignKey(Formulario, related_name='campos', on_delete=models.CASCADE)
+    etiqueta = models.CharField(max_length=100)
+    tipo = models.CharField(max_length=20, choices=TIPO_CAMPO)
+    opciones = models.TextField(blank=True, help_text="Si es selección, separa opciones con coma")
+    obligatorio = models.BooleanField(default=True)
