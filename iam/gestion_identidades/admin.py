@@ -1,12 +1,17 @@
 from django.contrib import admin
-from .models import  aplicativo,modulo,Formulario
-#from import_export.admin import ImportExportModelAdmin
-#from import_export.resources import ModelResource
-#from import_export.admin import ExportMixin
-#from import_export.admin import ImportExportModelAdmin
-####PARA EL REENVIO DE APROBADOS###
-#from django.core.mail import send_mail
-#from django.core.mail import EmailMultiAlternatives
+from .models import  aplicativo,modulo, solicitud, respuestasolicitud
+from django.contrib.sessions.models import Session
+from django.contrib.admin.models import LogEntry
+
+admin.site.register(Session)
+
+
+class LogEntryAdmin(admin.ModelAdmin):
+    list_display = ('action_time', 'user', 'content_type', 'object_repr', 'action_flag', 'change_message')
+    list_filter = ('action_flag', 'user')
+    search_fields = ('object_repr', 'change_message')
+admin.site.register(LogEntry, LogEntryAdmin)
+
 
 class Aplicativo(admin.ModelAdmin):
     list_display=('id', 'nombre', 'activo', 'fecha_creacion','fecha_actualizacion')
@@ -19,8 +24,12 @@ class Modulo(admin.ModelAdmin):
     search_fields = ('nombre',)
 admin.site.register(modulo, Modulo)
 
+class Solicitud(admin.ModelAdmin):
+    list_display=('id', 'nombre', 'descripcion', 'estructura_json', 'fecha_creacion', 'fecha_actualizacion')
+admin.site.register(solicitud, Solicitud)
 
-@admin.register(Formulario)
-class FormularioPersonalizadoAdmin(admin.ModelAdmin):
-    list_display = ['nombre']
-    search_fields = ['nombre']
+class RespuestaSolicitud(admin.ModelAdmin):
+    list_display=('id', 'solicitud', 'datos', 'fecha_creacion', 'fecha_actualizacion')
+    list_filter = ('fecha_creacion',)
+    search_fields = ('datos',)
+admin.site.register(respuestasolicitud, RespuestaSolicitud)

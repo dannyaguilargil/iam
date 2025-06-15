@@ -20,5 +20,6 @@ from django.urls import path, include
 urlpatterns = [
 
     path('admin/', admin.site.urls),
+    path('', include('gestion_identidades.urls')), #para acedder a otra ruta en otra carpeta
     #path("dynamic-forms/", include("dynamic_forms.urls")),
 ]
