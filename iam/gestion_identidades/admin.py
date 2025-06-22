@@ -2,6 +2,9 @@ from django.contrib import admin
 from .models import  aplicativo,modulo, solicitud, respuestasolicitud
 from django.contrib.sessions.models import Session
 from django.contrib.admin.models import LogEntry
+from django_json_widget.widgets import JSONEditorWidget
+from django import forms
+from .forms import SolicitudForm
 
 admin.site.register(Session)
 
@@ -24,7 +27,9 @@ class Modulo(admin.ModelAdmin):
     search_fields = ('nombre',)
 admin.site.register(modulo, Modulo)
 
+
 class Solicitud(admin.ModelAdmin):
+    form = SolicitudForm
     list_display=('id', 'nombre', 'descripcion', 'estructura_json', 'fecha_creacion', 'fecha_actualizacion')
 admin.site.register(solicitud, Solicitud)
 

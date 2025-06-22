@@ -1,5 +1,6 @@
 from django.db import models
 import uuid
+from .choices import FormularioTipos
 # Create your models here.
 class aplicativo(models.Model):
     id = models.AutoField(primary_key=True)
@@ -27,6 +28,12 @@ class solicitud(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     nombre = models.CharField(max_length=100)
     descripcion = models.TextField(blank=True, verbose_name="Descripcion del formulario")
+    tipo = models.CharField(
+        max_length=50,
+        choices=FormularioTipos.choices,
+        verbose_name="Tipo de formulario",
+        default=FormularioTipos.CREACION_USUARIO  
+    )
     estructura_json = models.JSONField(help_text="JSON que define los campos del formulario")
     fecha_creacion = models.DateTimeField(auto_now_add=True, verbose_name="Fecha de creacion")
     fecha_actualizacion = models.DateTimeField(auto_now=True, verbose_name="Fecha de actualizacion")
