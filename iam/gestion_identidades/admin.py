@@ -4,7 +4,7 @@ from django.contrib.sessions.models import Session
 from django.contrib.admin.models import LogEntry
 from django_json_widget.widgets import JSONEditorWidget
 from django import forms
-from .forms import SolicitudForm
+from .forms import SolicitudForm, RespuestaSolicitudForm
 
 admin.site.register(Session)
 
@@ -34,6 +34,7 @@ class Solicitud(admin.ModelAdmin):
 admin.site.register(solicitud, Solicitud)
 
 class RespuestaSolicitud(admin.ModelAdmin):
+    form = RespuestaSolicitudForm
     list_display=('id', 'solicitud', 'datos', 'fecha_creacion', 'fecha_actualizacion')
     list_filter = ('fecha_creacion',)
     search_fields = ('datos',)
