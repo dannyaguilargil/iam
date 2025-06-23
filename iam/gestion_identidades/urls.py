@@ -13,6 +13,7 @@ urlpatterns = [
     #path('base', views.base, name='base'),
     path('', views.home, name='casita'),
     path('login', views.home, name='inicio'),
+    path('registro', views.registro_usuario, name='registro'),
     #path('login', views.logout, name='logout'),
    
   
