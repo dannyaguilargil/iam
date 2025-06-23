@@ -6,6 +6,7 @@ from django.contrib import messages
 from .models import solicitud, respuestasolicitud
 from .utils import generar_formulario_dinamico 
 from django.contrib.auth.models import User
+from django.core.mail import send_mail
 # Create your views here.
 def home(request):
     if request.method == 'POST':
@@ -48,18 +49,17 @@ def registro_usuario(request):
         if form.is_valid():
             datos = form.cleaned_data
 
-            # Guardar la respuesta
+            # Guardar la respuesta del formulario
             respuestasolicitud.objects.create(
                 solicitud=form_def,
                 datos=datos
             )
 
-            # Crear el usuario en Django
             username = datos.get("usuario")
             password = datos.get("password")
-            email = datos.get("email", "")
-            nombre = datos.get("primer_nombre", "")
-            apellido = datos.get("primer_apellido", "")
+            email = datos.get("email")
+            nombre = datos.get("nombre")
+            apellido = datos.get("apellidos")
 
             if User.objects.filter(username=username).exists():
                 messages.error(request, "Ese nombre de usuario ya existe.")
@@ -71,8 +71,36 @@ def registro_usuario(request):
                     first_name=nombre,
                     last_name=apellido
                 )
-                messages.success(request, "Usuario creado correctamente.")
-                return redirect('login')  # o donde necesites
+
+                # Envío de correo de bienvenida
+                mensaje = f"""
+                Hola {nombre},
+
+                Tu cuenta ha sido creada exitosamente en el sistema IAM.
+
+                Tus credenciales de acceso son:
+
+                Usuario: {username}
+                Contraseña: {password}
+
+                Por favor, inicia sesión en el sistema y cambia tu contraseña después del primer ingreso.
+
+                Saludos,
+                Equipo IAM
+                """
+                try:
+                    send_mail(
+                        subject='Cuenta creada - IAM',
+                        message=mensaje,
+                        from_email=None,  # Usa DEFAULT_FROM_EMAIL en settings.py
+                        recipient_list=[email],
+                        fail_silently=False
+                    )
+                    messages.success(request, "Usuario creado correctamente. Se ha enviado un correo con los datos de acceso.")
+                except Exception as e:
+                    messages.warning(request, f"Usuario creado pero no se pudo enviar el correo: {e}")
+
+                return redirect('login')
 
     else:
         form = FormClass()

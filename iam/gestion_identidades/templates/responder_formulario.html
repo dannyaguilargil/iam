@@ -2,40 +2,201 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <title>{{ solicitud.nombre }}</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-        body { font-family: Arial, sans-serif; margin: 20px; background-color: #f9f9f9; }
-        .form-box { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); max-width: 600px; margin: auto; }
-        h1 { text-align: center; }
-        label { font-weight: bold; display: block; margin-top: 15px; }
-        input, select, textarea { width: 100%; padding: 8px; margin-top: 5px; border: 1px solid #ccc; border-radius: 4px; }
-        button { margin-top: 20px; padding: 10px 20px; background-color: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; }
-        .messages { margin-bottom: 20px; }
-        .messages .success { color: green; }
-        .messages .error { color: red; }
-    </style>
+  <meta charset="UTF-8">
+  <title>{{ solicitud.nombre }}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #eef2f7;
+      margin: 0;
+      padding: 0;
+    }
+
+    .main-wrapper {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .container {
+      display: flex;
+      max-width: 1100px;
+      width: 100%;
+      background-color: white;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .left-panel {
+      flex: 7;
+      padding: 40px;
+      background: white;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .right-panel {
+      flex: 3;
+      padding: 40px;
+      background: linear-gradient(to right, #007bff, #0056b3);
+      color: white;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    h1 { margin-bottom: 10px; color: #333; }
+    p { color: #666; font-size: 14px; }
+
+    .form-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .form-group {
+      flex: 1 1 calc(50% - 10px);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .form-group-full {
+      flex: 1 1 100%;
+      display: flex;
+      align-items: center;
+    }
+
+    label {
+      font-weight: 600;
+      margin-bottom: 5px;
+    }
+
+    input, select, textarea {
+      padding: 10px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+
+    .checkbox-label {
+      display: flex;
+      align-items: center;
+      font-weight: 600;
+      gap: 10px;
+    }
+
+    .checkbox-label input[type="checkbox"] {
+      transform: scale(1.2);
+      margin-right: 10px;
+    }
+
+    .messages {
+      margin: 20px 0;
+    }
+
+    .messages .success { color: green; font-weight: bold; }
+    .messages .error { color: red; font-weight: bold; }
+
+    .actions {
+      margin-top: 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .btn {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 6px;
+      font-weight: bold;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .btn-submit { background-color: #007bff; color: white; }
+    .btn-login { background-color: #6c757d; color: white; }
+
+    .btn:hover { opacity: 0.9; }
+
+    .error {
+      color: red;
+      font-size: 13px;
+      margin-top: 5px;
+    }
+
+    @media (max-width: 768px) {
+      .container { flex-direction: column; }
+      .form-group, .form-group-full { flex: 1 1 100%; }
+      .right-panel { text-align: center; padding: 30px 20px; }
+      .actions { flex-direction: column; gap: 10px; }
+    }
+  </style>
 </head>
 <body>
 
-<div class="form-box">
-    <h1>{{ solicitud.nombre }}</h1>
-    <p>{{ solicitud.descripcion }}</p>
+<div class="main-wrapper">
+  <div class="container">
+    <div class="left-panel">
+      <h1>Crear una cuenta</h1>
+      <p>{{ solicitud.descripcion }}</p>
 
-    {% if messages %}
+      {% if messages %}
         <div class="messages">
-            {% for message in messages %}
-                <p class="{{ message.tags }}">{{ message }}</p>
-            {% endfor %}
+          {% for message in messages %}
+            <p class="{{ message.tags }}">{{ message }}</p>
+          {% endfor %}
         </div>
-    {% endif %}
+      {% endif %}
 
-    <form method="post">
+      <form method="post">
         {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Enviar</button>
-    </form>
+
+        <div class="form-grid">
+          {% for field in form %}
+            {% if field.field.widget.input_type == "checkbox" %}
+              <div class="form-group-full">
+                <label class="checkbox-label">
+                  {{ field }}
+                  {{ field.label }}
+                </label>
+                {% if field.errors %}
+                  <div class="error">{{ field.errors }}</div>
+                {% endif %}
+              </div>
+            {% else %}
+              <div class="form-group">
+                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                {{ field }}
+                {% if field.errors %}
+                  <div class="error">{{ field.errors }}</div>
+                {% endif %}
+              </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+
+        <div class="actions">
+          <button type="submit" class="btn btn-submit">Enviar</button>
+          <a href="{% url 'login' %}" class="btn btn-login">Iniciar sesión</a>
+        </div>
+      </form>
+    </div>
+
+    <div class="right-panel">
+      <h2>IAM - Gestión de Identidades</h2>
+      <p>
+        Este sistema permite a los usuarios registrarse y gestionar su identidad digital de forma segura y eficiente. 
+        Ya seas contratista, funcionario o parte del equipo oficial, este espacio garantiza una trazabilidad clara y una vinculación formal con los sistemas internos.
+      </p>
+    </div>
+  </div>
 </div>
 
 </body>

@@ -4,9 +4,11 @@ Desarollador por @d4n7.dev
 """
 from pathlib import Path
 import os
-from decouple import config
+from decouple import config, RepositoryEnv
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+#ENV_PATH = BASE_DIR.parent / '.env'  
+#env_config = Config(repository=RepositoryEnv(str(ENV_PATH)))
 
 MEDIA_URL = 'sistemas_cuentas/static/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'sistemas_cuentas/static/')

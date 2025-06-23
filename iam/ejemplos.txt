@@ -1,0 +1,46 @@
+# nombre y apellidos, username, password, email
+#Auto registro de usuario
+[
+  {
+    "type": "text",
+    "name": "nombre",
+    "label": "Nombre",
+    "required": true
+  },
+  {
+    "type": "text",
+    "name": "apellidos",
+    "label": "Apellidos",
+    "required": true
+  },
+  {
+    "type": "text",
+    "name": "organizacion",
+    "label": "Organizacion",
+    "required": true
+  },
+  {
+    "type": "text",
+    "name": "usuario",
+    "label": "Nombre de usuario",
+    "required": true
+  },
+  {
+    "type": "email",
+    "name": "email",
+    "label": "Correo electrónico",
+    "required": true
+  },
+  {
+    "type": "password",
+    "name": "password",
+    "label": "Contraseña",
+    "required": true
+  },
+  {
+    "type": "password",
+    "name": "confirmar_password",
+    "label": "Confirmar contraseña",
+    "required": true
+  }
+]
