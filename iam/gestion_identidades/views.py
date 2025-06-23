@@ -23,8 +23,8 @@ def home(request):
                     return redirect('/admin')
                 else:
                     login(request, user)
-                    messages.error(request, 'No tiene permisos asociados, contacte al amdinistrador.')
-                    return redirect('inicio')
+                    #messages.error(request, 'No tiene permisos asociados, contacte al amdinistrador.')
+                    return redirect('test')
                    
                    
         else:
