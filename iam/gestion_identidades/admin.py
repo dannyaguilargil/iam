@@ -6,7 +6,7 @@ from django_json_widget.widgets import JSONEditorWidget
 from django import forms
 from .forms import SolicitudForm, RespuestaSolicitudForm
 
-admin.site.register(Session)
+#admin.site.register(Session)
 
 
 class LogEntryAdmin(admin.ModelAdmin):

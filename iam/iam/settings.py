@@ -23,13 +23,7 @@ ALLOWED_HOSTS = []
 
 
 INSTALLED_APPS = [
-    #'unfold',  
-    #"unfold.contrib.filters",  # optional, if special filters are needed
-    #"unfold.contrib.forms",  # optional, if special form elements are needed
-    #"unfold.contrib.inlines",  # optional, if special inlines are needed
-    #"unfold.contrib.import_export",  # optional, if django-import-export package is used
-    #"unfold.contrib.guardian",  # optional, if django-guardian package is used
-    #"unfold.contrib.simple_history",  # optional, if django-simple-history package is used
+    'jazzmin',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -127,28 +121,5 @@ STATICFILES_DIRS = [
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-UNFOLD = {
-    "SITE_TITLE": "Panel Admin - d4n7.dev",
-    "SITE_HEADER": "Identidades informaticas",
-    "SHOW_HISTORY": True,
-    "PRIMARY_COLOR": "blue",
-    "MENU": [
-        {
-            "type": "title",
-            "label": "Gestión",
-        },
-        {
-            "type": "model",
-            "label": "Usuarios",
-            "model": "auth.User",
-            "icon": "user",
-        },
-        {
-            "type": "model",
-            "label": "Grupos",
-            "model": "auth.Group",
-            "icon": "users",
-        },
-    ],
-}
+
 
