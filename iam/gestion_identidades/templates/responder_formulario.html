@@ -170,6 +170,14 @@
                   <div class="error">{{ field.errors }}</div>
                 {% endif %}
               </div>
+            {% elif field.field.widget.input_type == "select" %}
+              <div class="form-group">
+                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                {{ field }}
+                {% if field.errors %}
+                  <div class="error">{{ field.errors }}</div>
+                {% endif %}
+              </div>
             {% else %}
               <div class="form-group">
                 <label for="{{ field.id_for_label }}">{{ field.label }}</label>

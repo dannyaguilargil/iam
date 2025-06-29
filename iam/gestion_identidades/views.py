@@ -92,12 +92,13 @@ def registro_usuario(request):
                     send_mail(
                         subject='Cuenta creada - IAM',
                         message=mensaje,
-                        from_email=None,  # Usa DEFAULT_FROM_EMAIL en settings.py
+                        from_email='noreply@dannyhub.com', 
                         recipient_list=[email],
                         fail_silently=False
                     )
                     messages.success(request, "Usuario creado correctamente. Se ha enviado un correo con los datos de acceso.")
                 except Exception as e:
+                    print(f"Error enviando correo: {e}")  
                     messages.warning(request, f"Usuario creado pero no se pudo enviar el correo: {e}")
 
                 return redirect('login')
